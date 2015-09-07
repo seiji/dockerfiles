@@ -1,0 +1,5 @@
+[fedora-source-17]
+name=Fedora 17 - Source
+mirrorlist=https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-source-17&arch=$arch
+failovermethod=priority
+enabled=0
