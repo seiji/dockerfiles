@@ -1,4 +1,4 @@
-apache24:
+apache:
     build: .
     volumes:
         - .:/shared
@@ -6,4 +6,4 @@ apache24:
         APACHE_VERSION: 2.4.16
         APR_VERSION: 1.5.2
         APR_UTIL_VERSION: 1.5.4
-    command: /bin/sh ./build.sh
+    command: /bin/sh ./build_apache.sh
