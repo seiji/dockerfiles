@@ -1,6 +1,6 @@
 FROM centos:6
 
-RUN yum update -y && yum install -y -q yum-utils build-essential git tar wget which tcl
+RUN yum update -y && yum install -y -q yum-utils build-essential git tar wget which tcl zlib-devel
 RUN yum groupinstall -y 'Development tools'
 RUN yum clean all
 
@@ -11,3 +11,5 @@ RUN rpm -ihv http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noar
 WORKDIR /opt/rpmbuild
 ADD apache /opt/rpmbuild/apache/
 ADD redis /opt/rpmbuild/redis/
+ADD handlersocket /opt/rpmbuild/handlersocket/
+

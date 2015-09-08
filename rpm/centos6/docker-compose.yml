@@ -14,3 +14,11 @@ redis:
     environment:
         REDIS_VERSION: 2.8.21
     command: /bin/sh ./redis/./build.sh
+handlersocket:
+    build: .
+    volumes:
+        - .:/shared
+    environment:
+        MYSQL_VERSION: 5.6.19
+        HANDLERSOCKET_VERSION: 1.1.1
+    command: /bin/sh ./handlersocket/./build.sh
