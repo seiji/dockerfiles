@@ -6,4 +6,11 @@ apache:
         APACHE_VERSION: 2.4.16
         APR_VERSION: 1.5.2
         APR_UTIL_VERSION: 1.5.4
-    command: /bin/sh ./build_apache.sh
+    command: /bin/sh ./apache/./build.sh
+redis:
+    build: .
+    volumes:
+        - .:/shared
+    environment:
+        REDIS_VERSION: 2.8.21
+    command: /bin/sh ./redis/./build.sh
