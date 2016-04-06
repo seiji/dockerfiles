@@ -48,6 +48,4 @@ rpm -U dist/RPMS/*/handlersocket*.rpm
 make rpm_perl
 rpm -U dist/RPMS/*/perl-Net-HandlerSocket*.rpm
 
-# rm httpd-*.asc $WORKDIR/rpm/SRPMS/httpd-*.src.rpm
-
 cp dist/RPMS/x86_64/* /shared/

@@ -1,0 +1,21 @@
+nsqlookupd:
+  build: .
+  command: nsqlookupd
+  ports:
+    - "4160:4160"
+    - "4161:4161"
+nsqd:
+  build: .
+  command: nsqd --data-path /data --lookupd-tcp-address nsqlookupd:4160 --broadcast-address=HOSTIP
+  links:
+    - nsqlookupd
+  ports:
+    - "4150:4150"
+    - "4151:4151"
+nsqadmin:
+  build: .
+  command: nsqadmin --lookupd-http-address nsqlookupd:4161
+  links:
+    - nsqlookupd
+  ports:
+    - "4171:4171"
