@@ -1,0 +1,89 @@
+network:
+    bind_host: 0.0.0.0
+http:
+    port: 9200
+transport:
+    tcp:
+        port: 9300
+path:
+    data: /var/lib
+    logs: /var/lib/elasticsearch
+    plugins: /opt/elasticsearch/plugins
+# index:
+#     analysis:
+#         filter:
+#             part_of_speech:
+#                 type: kuromoji_part_of_speech
+#                 stoptags: [
+#                     "助詞-格助詞-一般",
+#                     "助詞-終助詞"
+#                 ]
+#             greek_lowercase:
+#                 type: "lowercase"
+#                 language: "greek"
+#             katakana_stemmer:
+#                 type: kuromoji_stemmer
+#             synonym:
+#                 type: synonym
+#                 synonyms_path: synonym.txt
+#             stopword:
+#                 type: stop
+#                 stopwords_path: stopword.txt
+#         tokenizer:
+#             kurom_ja_tokenizer:
+#                 type: kuromoji_tokenizer
+#                 mode: search
+#                 user_dictionary: userdict_ja.txt
+#             ngram_ja_tokenizer:
+#                 type: nGram
+#                 min_gram: 2
+#                 max_gram: 3
+#                 token_chars: [letter, digit]
+#         analyzer:
+#             ja:
+#                 alias: [index_analyzer]
+#                 type: custom
+#                 tokenizer: kurom_ja_tokenizer
+#                 char_filter: [
+#                     html_strip,
+#                     kuromoji_iteration_mark
+#                 ]
+#                 filter: [
+#                     cjk_width,
+#                     greek_lowercase,
+#                     katakana_stemmer,
+#                     kuromoji_baseform,
+#                     part_of_speech,
+#                     stopword
+#                 ]
+#             ja_ngram:
+#                 type: custom
+#                 tokenizer: ngram_ja_tokenizer
+#                 char_filter: [html_strip]
+#                 filter: [
+#                     cjk_width,
+#                     greek_lowercase
+#                 ]
+#             ja_synonym:
+#                alias: [search_analyzer]
+#                type: custom
+#                tokenizer: kurom_ja_tokenizer
+#                char_filter: [
+#                    html_strip,
+#                    kuromoji_iteration_mark
+#                ]
+#                filter: [
+#                    cjk_width,
+#                    greek_lowercase,
+#                    katakana_stemmer,
+#                    part_of_speech,
+#                    synonym,
+#                    stopword
+#                ]
+#             keyword:
+#                 type: custom
+#                 tokenizer: keyword
+#                 char_filter: [html_strip]
+#                 filter": [
+#                     cjk_width, lowercase
+#                 ]
