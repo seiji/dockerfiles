@@ -1,0 +1,28 @@
+redis01:
+  build: .
+  links:
+    - redis02
+    - redis03
+    - redis04
+  ports:
+    - "6379:6379"
+    - "16379:16379"
+  privileged: true
+redis02:
+  build: .
+  ports:
+    - "6380:6379"
+    - "16380:16379"
+  privileged: true
+redis03:
+  build: .
+  ports:
+    - "6381:6379"
+    - "16381:16379"
+  privileged: true
+redis04:
+  build: .
+  ports:
+    - "6382:6379"
+    - "16382:16379"
+  privileged: true

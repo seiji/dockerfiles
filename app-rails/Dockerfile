@@ -3,7 +3,9 @@ FROM alpine:3.4
 ENV KIBANA_VERSION 4.6.1-linux-x86_64
 
 RUN \
-  apk --update add curl \
+  apk --update add \
+  tzdata \
+  curl \
   build-base \
   libffi-dev \
   sqlite-dev \
@@ -15,7 +17,9 @@ RUN \
   ruby-json \
   ruby-bundler ruby-bigdecimal ruby-dev && \
   mkdir -p /opt && \
-  apk del curl && \
+  cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+  echo "Asia/Tokyo"  >  /etc/timezone && \
+  apk del curl tzdata && \
   rm -Rf /tmp/* /var/cache/apk/*
 
 RUN mkdir /app
