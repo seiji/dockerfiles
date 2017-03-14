@@ -12,7 +12,7 @@ redis:
     volumes:
         - .:/shared
     environment:
-        REDIS_VERSION: 2.8.21
+        REDIS_VERSION: 3.2.8
     command: /bin/sh ./redis/./build.sh
 handlersocket:
     build: .
