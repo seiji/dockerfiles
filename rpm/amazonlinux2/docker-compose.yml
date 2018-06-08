@@ -1,4 +1,4 @@
-apache:
+apache24:
   build: .
   volumes:
     - .:/shared
