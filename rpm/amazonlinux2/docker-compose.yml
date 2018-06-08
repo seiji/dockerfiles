@@ -1,0 +1,9 @@
+apache:
+  build: .
+  volumes:
+    - .:/shared
+  environment:
+    APACHE_VERSION: 2.4.33
+    APR_VERSION: 1.6.3
+    APR_UTIL_VERSION: 1.6.1
+  command: /bin/sh ./apache/./build.sh
