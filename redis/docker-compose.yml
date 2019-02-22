@@ -1,28 +1,34 @@
-redis01:
-  build: .
-  links:
-    - redis02
-    - redis03
-    - redis04
-  ports:
-    - "6379:6379"
-    - "16379:16379"
-  privileged: true
-redis02:
-  build: .
-  ports:
-    - "6380:6379"
-    - "16380:16379"
-  privileged: true
-redis03:
-  build: .
-  ports:
-    - "6381:6379"
-    - "16381:16379"
-  privileged: true
-redis04:
-  build: .
-  ports:
-    - "6382:6379"
-    - "16382:16379"
-  privileged: true
+version: '3'
+services:
+  redis: &redis
+    build: .
+    networks:
+    - redis-cluster
+    privileged: true
+  redis-cluster:
+    <<: *redis
+    ports:
+      - "6379:6379"
+    depends_on:
+      - redis2
+      - redis3
+  redis2:
+    <<: *redis
+  redis3:
+    <<: *redis
+  # redis-cluster:
+  #   <<: *redis
+  #   depends_on:
+  #     - redis1
+  #     - redis2
+  #     - redis3
+  #   command: 'yes | redis-cli --cluster create redis1:6379 redis2:6379 redis3:6379'
+volumes:
+  redis-data:
+networks:
+  redis-cluster:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.239.0/24
