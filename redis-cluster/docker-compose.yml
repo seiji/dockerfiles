@@ -1,0 +1,11 @@
+version: '3'
+services:
+  redis-cluster:
+    build: .
+    networks:
+    - redis-cluster
+    privileged: true
+    ports:
+      - "6379:7000"
+networks:
+  redis-cluster:

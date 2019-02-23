@@ -1,0 +1,14 @@
+version: '3'
+services:
+  localstack:
+    image: localstack/localstack
+    environment:
+      - HOSTNAME_EXTERNAL=localstack
+    networks:
+    - localstack
+    ports:
+      - '8080:8080'
+      - '4576:4576' # For SQS
+    privileged: true
+networks:
+  localstack:
