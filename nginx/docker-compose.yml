@@ -2,19 +2,22 @@ version: "3.7"
 services:
   rp:
     image: nginx:1.17.4-alpine
+    environment:
+      TZ: Asia/Tokyo
     ports:
       - 8888:80
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./conf.d/rp.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx_rp.conf:/etc/nginx/nginx.conf
+      # - ./conf.d/rp.conf:/etc/nginx/conf.d/default.conf
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - default
   app1:
     image: nginx:1.17.4-alpine
+    environment:
+      TZ: Asia/Tokyo
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx_app.conf:/etc/nginx/nginx.conf
       - ./html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
