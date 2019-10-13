@@ -1,16 +1,18 @@
 PROJ_ROOT = $(realpath ./)
 
-.PHONY: start stop test
+.PHONY: siege start stop test
 
 start:
-	docker-compose up \
+	docker-compose up -d \
 		--force-recreate \
 		--remove-orphans
-
 stop:
 	docker-compose stop
 
-test:
-	siege -q -t 5s -c 20 --log=/tmp/siege.log \
+test: stop start siege
+
+siege:
+	siege -q -r 100 -c 10 \
+		--log=/tmp/siege.log \
 		http://localhost:8888
 	cat /tmp/siege.log
