@@ -1,6 +1,11 @@
 PROJ_ROOT = $(realpath ./)
 
-.PHONY: siege start stop test
+.PHONY: up siege start stop test
+
+up:
+	docker-compose up \
+		--force-recreate \
+		--remove-orphans
 
 start:
 	docker-compose up -d \
