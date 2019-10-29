@@ -1,0 +1,12 @@
+name: Docker Image CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        images: [amazon-ssm-agent] 
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build ${{matrix.images}} --file Dockerfile --tag ${{matrix.images}}:$(date +%s)
