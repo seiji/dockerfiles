@@ -5,8 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        images: [amazon-ssm-agent] 
+        images: [amazon-ssm-agent]
     steps:
     - uses: actions/checkout@v1
-    - name: Build the Docker image
-      run: docker build ${{matrix.images}} --file Dockerfile --tag ${{matrix.images}}:$(date +%s)
+    - name: Build image
+      env:
+        SHA: ${{ github.sha }}
+      run: docker build ${{matrix.images}} --tag seiji/${{matrix.images}}:$SHA
+    - name: Login docker
+      env:
+        DOCKERHUB_USER: ${{ secrets.dockerhub_user }}
+        DOCKERHUB_PASS: ${{ secrets.dockerhub_pass }}
+      run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+    - name: Push image
+      env:
+        SHA: ${{ github.sha }}
+      run: docker push seiji/${{matrix.images}}:$SHA
