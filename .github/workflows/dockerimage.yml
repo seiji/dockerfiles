@@ -9,15 +9,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build image
-      env:
-        SHA: ${{ github.sha }}
-      run: docker build ${{matrix.images}} --tag seiji/${{matrix.images}}:$SHA
+      run: docker build ${{matrix.images}} --tag seiji/${{matrix.images}}:$(date +%Y%m%d)
     - name: Login docker
       env:
         DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
         DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
       run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
     - name: Push image
-      env:
-        SHA: ${{ github.sha }}
-      run: docker push seiji/${{matrix.images}}:$SHA
+      run: docker push seiji/${{matrix.images}}:$(date +%Y%m%d)
