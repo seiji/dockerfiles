@@ -1,12 +1,11 @@
-FROM golang:1.13.3-alpine
+FROM golang:1.12.12
 
 ARG SSM_VERSION="2.3.722.0"
 ARG SRC_DIR="/go/src/amazon-ssm-agent"
 ARG BIN_DIR="/usr/local/amazon/bin"
 ARG CONF_DIR="/etc/amazon/ssm"
 
-RUN apk add --no-cache --virtual .ssm-build bash curl git make gcc libc-dev \
-  && go get golang.org/x/tools/cmd/goimports \
+RUN go get golang.org/x/tools/cmd/goimports \
   && mkdir -p ${SRC_DIR} \
   && curl -sS -fL https://api.github.com/repos/aws/amazon-ssm-agent/tarball/${SSM_VERSION} \
   | tar --strip-components=1 -xzf - -C ${SRC_DIR} \
@@ -27,6 +26,5 @@ RUN apk add --no-cache --virtual .ssm-build bash curl git make gcc libc-dev \
   && install -m 400 ${SRC_DIR}/amazon-ssm-agent.json.template ${CONF_DIR}/amazon-ssm-agent.json \
   && install -m 400 ${SRC_DIR}/seelog_unix.xml ${CONF_DIR}/seelog.xml \
 	&& rm -Rf ${SRC_DIR} \
-	&& rm -Rf bin/* \
-	&& rm -Rf src/* \
-  && apk del .ssm-build
+	&& rm -Rf /go/bin/* \
+	&& rm -Rf /go/src/*
