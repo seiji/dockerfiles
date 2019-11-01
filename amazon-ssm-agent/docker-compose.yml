@@ -1,5 +1,6 @@
 version: "3.7"
 services:
-  agent:
+  amazon-ssm-agent:
     build:
       context: .
+    image: seiji/amazon-ssm-agent

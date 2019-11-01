@@ -26,20 +26,7 @@ help:
 	@echo " "
 	@echo "  where <target> is one of:"
 	@echo "    - help               - display this help message"
-	@echo "    - all/<package>      - build binary, image, flatten, and push (choices: ${UNIT})"
-	@echo "    - bin                - build amazon-ssm-agent binary for packaging"
-	@echo "    - bin/<package>      - build binary for specified package (choices: ${UNIT})"
-	@echo "    - download           - download the src for compilation"
-	@echo "    - get-release-info   - download src repo version info  (choices: 'latest' or release 'tag')"
-	@echo "    - gen-systemd-unit   - render systemd unit file"
-	@echo "    - image              - bundle container image for all package(s)"
-	@echo "    - image/<package>    - bundle container image for specified package (choices: ${UNIT})"
-	@echo "    - lint               - lint dockerfile based on the rules defined in linter.yml for all package(s)"
-	@echo "    - lint /<package>    - lint dockerfile for specified package (choices: ${UNIT})"
-	@echo "    - push               - push container image(s) for all package(s) to registry"
-	@echo "    - push/<package>     - push container image for specified package to registry (choices: ${UNIT})"
-	@echo "    - clean              - clean temp files, etc. for all packages"
-	@echo "    - clean/<package>    - clean temp files, etc. for specified package (choices: ${UNIT})"
+	@echo "    - build              - build amazon-ssm-agent binary"
 	@exit 0
 
 build:

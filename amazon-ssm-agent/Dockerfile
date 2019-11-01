@@ -27,4 +27,6 @@ RUN apk add --no-cache --virtual .ssm-build bash curl git make gcc libc-dev \
   && install -m 400 ${SRC_DIR}/amazon-ssm-agent.json.template ${CONF_DIR}/amazon-ssm-agent.json \
   && install -m 400 ${SRC_DIR}/seelog_unix.xml ${CONF_DIR}/seelog.xml \
 	&& rm -Rf ${SRC_DIR} \
+	&& rm -Rf bin/* \
+	&& rm -Rf src/* \
   && apk del .ssm-build
