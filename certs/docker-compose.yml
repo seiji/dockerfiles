@@ -1,0 +1,12 @@
+version: "3"
+services:
+  certs:
+    build:
+      context: .
+    command: /bin/sh gen.sh
+    environment:
+      CN: "common-name"
+      DAYS: 3650
+      PASS: "pass"
+    volumes:
+      - "./certs:/certs"
