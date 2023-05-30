@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  binaries:
+    build:
+      context: .
+      dockerfile: Dockerfile.binaries
+    platform: linux/x86_64
+    volumes:
+      - binaries-data:/vendor/falco
+  workload:
+    build:
+      context: .
+      dockerfile: Dockerfile.workload
+    cap_add:
+      - SYS_PTRACE
+    command: >-
+      /vendor/falco/bin/pdig ./bootstrap \
+        -- /vendor/falco/bin/falco --userspace -c /data/falco.yaml
+    entrypoint: /vendor/falco/bin/launcher
+    environment:
+      AWS_REGION: ap-northeast-1
+      __CW_LOG_GROUP: /aws/ecs/service/falco_alerts
+    platform: linux/x86_64
+    volumes:
+      # - $HOME/.aws:/root/.aws:ro
+      - ./falco.yaml:/data/falco.yaml:ro
+      - ./falco_rules.local.yaml:/data/falco_rules.local.yaml:ro
+      - binaries-data:/vendor/falco:ro
+networks:
+  default:
+volumes:
+  binaries-data:
