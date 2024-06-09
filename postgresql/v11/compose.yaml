@@ -1,0 +1,54 @@
+x-pg11:
+  &pg11
+  image: postgres:11.5-alpine
+  user: postgres
+
+services:
+  p:
+    <<: *pg11
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data
+    command: |
+      postgres
+        -c hba_file=/etc/postgresql/pg_hba.conf
+        -c max_wal_senders=10
+        -c max_replication_slots=10
+        -c wal_level=replica
+        -c wal_log_hints=on
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 1s
+      retries: 5
+    volumes:
+      - ./primary/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./primary/pg_hba.conf:/etc/postgresql/pg_hba.conf
+  s:
+    <<: *pg11
+    ports:
+      - "5433:5432"
+    environment:
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATA: /var/lib/postgresql/data
+      PGDATABASE: postgres
+    command: |
+      bash -c "
+      until pg_basebackup --pgdata=/var/lib/postgresql/data --host=p --port=5432 --slot=replication_slot --create-slot --write-recovery-conf
+      do
+        echo 'Waiting for primary to connect...'
+        sleep 1s
+      done
+      echo 'Backup done, starting replica...'
+      chmod 0700 /var/lib/postgresql/data
+      postgres -c hot_standby=on
+      "
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 1s
+      retries: 5
+    depends_on:
+      p:
+        condition: service_healthy
